@@ -17,4 +17,11 @@
 #sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 
 # Modify hostname
-#sed -i 's/OpenWrt/P3TERX-Router/g' package/base-files/files/bin/config_generate
+sed -i 's/OpenWrt(2025.3.21)/TP-LINK_1234/g' package/base-files/files/bin/config_generate
+
+# Set password to empty (no password)
+sed -i 's/root:[^:]*:0:0:99999:7:::/root::0:0:99999:7:::/g' package/base-files/files/etc/shadow
+
+# Set default language to Simplified Chinese
+uci set luci.main.lang='zh_cn'
+uci commit luci

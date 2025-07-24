@@ -10,18 +10,22 @@
 # See /LICENSE for more information.
 #
 
-# Modify default IP
+# Modify default IP (optional)
 #sed -i 's/192.168.1.1/192.168.50.5/g' package/base-files/files/bin/config_generate
 
-# Modify default theme
+# Modify default theme (optional)
 #sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 
 # Modify hostname
+sed -i '/CONFIG_DEFAULT_HOSTNAME/d' .config
 echo "CONFIG_DEFAULT_HOSTNAME='TP-LINK_1234'" >> .config
 
 # Set password to empty (no password)
 sed -i 's/root:[^:]*:0:0:99999:7:::/root::0:0:99999:7:::/g' package/base-files/files/etc/shadow
 
 # Set default language to Simplified Chinese
-uci set luci.main.lang='zh_cn'
-uci commit luci
+mkdir -p files/etc/config
+cat << EOF > files/etc/config/luci
+config core main
+    option lang 'zh_cn'
+EOF
